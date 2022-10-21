@@ -1,46 +1,68 @@
 from collections import UserDict
-from utils import check_phone
+
 
 class Field:
-    def __int__(self, value):
+    def __init__(self, value):
         self.value = value
 
 
 class Name(Field):
-    pass
+    def __repr__(self):
+        return f"Name(value={self.value})"
+
 
 class Phone(Field):
-    def __int__(self, value):
-         self.value = check_phone(value)
+    def __init__(self, value):
+        super().__init__(value)
+        self.value = value
+    #     check_phone(value)
+
+    @staticmethod
+    def check_phone(phone: str) -> str:
+        pattern = r"(^380|0|80)\d{9}$"
+        match = re.fullmatch(pattern, phone)
+        if not match:
+            raise ValueError("Invalid, please enter a valid phone number")
+
+        return phone
+
+    def __repr__(self):
+        return f"Phone(value={self.value})"
 
 
-class Record(Field):
-    def __init__(self, name, phone):
+class Record:
+    def __init__(self, name, phone=None):
         self.name = Name(name)
-        self.phone = []
+        self.phones = [Phone(phone)] if phone else []
 
-    def add_phone(self,phone):
-        self.phone.append(phone)
+    def add_phone(self, phone):
+        phone = Phone(phone)
 
+        if any(x.value == phone.value for x in self.phones):
+            return self.phones.append(phone)
+        return phone
 
-    def delete_phone(self,phone):
+    def delete_phone(self, phone):
         for phone in self.phone:
             if phone.value == phone:
                 self.phone.remove(phone)
                 return phone
 
-    def update_phone(self,old_phone,new_phone):
+    def update_phone(self, old_phone, new_phone):
         for phone in self.phone:
             if phone.value == old_phone:
                 self.update(new_phone)
                 return new_phone
 
+    def __repr__(self):
+        return "Record({})".format(', '.join([f"{k}={v!r}" for k, v in self.__dict__.items()]))
+
+
 class AddressBook(UserDict):
 
-    def add_record(self,name,phone):
-
-        if self.data.get(name):
+    def add_record(self, record):
+        if self.data.get(Name):
             raise ValueError("The contact details have already been added\n")
 
-        contact = Record(name=name,phone=phone)
+        contact = Record(name=Name, phone=Phone)
         self.data[record.name.value] = contact
