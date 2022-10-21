@@ -1,5 +1,6 @@
-from input_parser import search_args,check_args
+from input_parser import search_args, check_args
 from utils import input_error
+
 
 def main():
     while True:
