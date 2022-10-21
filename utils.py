@@ -1,5 +1,6 @@
 from functools import wraps
 
+
 def input_error(handler):
     @wraps(handler)
     def wrapper(*args, **kwargs):
@@ -16,11 +17,3 @@ def input_error(handler):
 
     return wrapper
 
-
-def check_phone(phone: str) -> str:
-    pattern = r"(^380|0|80)\d{9}$"
-    match = re.fullmatch(pattern, phone)
-    if not match:
-        raise ValueError("Invalid, please enter a valid phone number")
-
-    return phone
