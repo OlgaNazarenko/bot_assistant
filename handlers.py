@@ -34,7 +34,7 @@ def add_contact(name: str, phone: str) -> str:
 def phone_сontact(name: str, phone: str) -> str:
     name, phone = add_contact(name, phone)
     record_add = add_phone(phone)
-    constants.ADDRESS_BOOK.add_record(record_add)
+    return constants.ADDRESS_BOOK.add_record(record_add)
 
 
 def validate_phone(phone: str):
