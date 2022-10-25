@@ -32,9 +32,17 @@ def add_contact(name: str, phone: str) -> str:
 
 @input_error
 def phone_сontact(name: str, phone: str) -> str:
-    name, phone = add_contact(name, phone)
-    record_add = add_phone(phone)
-    return constants.ADDRESS_BOOK.add_record(record_add)
+    # name, phone = create_data(name, phone)
+    # record_add = Record(name)
+    # record_add.add_phone(phone)
+    # # return constants.ADDRESS_BOOK.add_record(record_add)
+    # return constants.ADDRESS_BOOK.add_record(record_add)
+
+    name, phone = create_data(name, phone)
+    record = Record(phone)
+    # record_add = record.add_phone(phone)
+    return f"'name:'{constants.ADDRESS_BOOK.data[name].name.value}, 'phone:'{list(map(lambda x: x.value, constants.ADDRESS_BOOK.data[name].phone))}"
+    # return constants.ADDRESS_BOOK.add_record(record)
 
 
 def validate_phone(phone: str):
@@ -46,11 +54,11 @@ def validate_phone(phone: str):
 
 @input_error
 def change_contact(name: str, old_phone: str, new_phone: str) -> str:
-    name, phone = add_contact(name, new_phone)
+    name, phone = create_data(name, old_phone)
 
     record = Record(name)
     record.add_phone(new_phone)
-    constants.ADDRESS_BOOK.add_phone(record)
+    constants.ADDRESS_BOOK.add_record(record)
 
     return f'The phone number for {name} was changed from {old_phone} to {new_phone}. ' \
            f'And it is updated in the main file.'
@@ -58,7 +66,7 @@ def change_contact(name: str, old_phone: str, new_phone: str) -> str:
 
 @input_error
 def show_all() -> str:
-    return f'All contacts can be seen in: \n{constants.ADDRESS_BOOK.data}'
+    return f'All contacts can be seen in: \n{constants.ADDRESS_BOOK}'
 
     constants.ADDRESS_BOOK = []
 
@@ -68,3 +76,24 @@ def show_all() -> str:
         constants.ADDRESS_BOOK.append(contact)
 
     return '\n'.join(constants.ADDRESS_BOOK)
+
+
+def create_data(name: str, phone: str):
+    name = name[0]
+    phone = phone[1]
+    if name.isnumeric():
+        raise ValueError('You entered a wrong name.')
+    if not phone.isnumeric():
+        raise ValueError('You entered a wrong phone number.')
+    return name, phone
+
+
+@input_error
+def delete_func(name: str, phone: str):
+    name, phone = create_data(data)
+    record_delete = addressbook.data[name]
+
+    if record_delete.delete_phone(phone) is True:
+        return f'Contact name: {name} phone: {phone}, has been deleted.'
+    else:
+        return 'The entered phone number does not exist'
