@@ -32,17 +32,11 @@ def add_contact(name: str, phone: str) -> str:
 
 @input_error
 def phone_сontact(name: str, phone: str) -> str:
-    # name, phone = create_data(name, phone)
-    # record_add = Record(name)
-    # record_add.add_phone(phone)
-    # # return constants.ADDRESS_BOOK.add_record(record_add)
-    # return constants.ADDRESS_BOOK.add_record(record_add)
-
     name, phone = create_data(name, phone)
     record = Record(phone)
-    # record_add = record.add_phone(phone)
-    return f"'name:'{constants.ADDRESS_BOOK.data[name].name.value}, 'phone:'{list(map(lambda x: x.value, constants.ADDRESS_BOOK.data[name].phone))}"
-    # return constants.ADDRESS_BOOK.add_record(record)
+
+    return f"'name:'{constants.ADDRESS_BOOK.data[name].name.value}, 'phone:'{list(map(lambda x: x.value, constants.ADDRESS_BOOK.data[name].phones))}"
+ 
 
 
 def validate_phone(phone: str):
