@@ -32,11 +32,7 @@ def add_contact(name: str, phone: str) -> str:
 
 @input_error
 def phone_сontact(name: str, phone: str) -> str:
-    name, phone = create_data(name, phone)
-    record = Record(phone)
-
     return f"'name:'{constants.ADDRESS_BOOK.data[name].name.value}, 'phone:'{list(map(lambda x: x.value, constants.ADDRESS_BOOK.data[name].phones))}"
- 
 
 
 def validate_phone(phone: str):
@@ -60,20 +56,11 @@ def change_contact(name: str, old_phone: str, new_phone: str) -> str:
 
 @input_error
 def show_all() -> str:
-    return f'All contacts can be seen in: \n{constants.ADDRESS_BOOK}'
-
-    constants.ADDRESS_BOOK = []
-
-    for contact in constants.ADDRESS_BOOK.values():
-        contact = f"{contact['name']}: {contact['phone']}"
-
-        constants.ADDRESS_BOOK.append(contact)
-
-    return '\n'.join(constants.ADDRESS_BOOK)
+    return '\n'.join(constants.ADDRESS_BOOK.data)
 
 
 def create_data(name: str, phone: str):
-    name = name[0]
+    name = name[:]
     phone = phone[1]
     if name.isnumeric():
         raise ValueError('You entered a wrong name.')
