@@ -8,8 +8,6 @@ class Field:
 
 class Name(Field):
     pass
-#     def __repr__(self):
-#         return f"Name(value={self.value})"
 
 
 class Phone(Field):
@@ -26,9 +24,6 @@ class Phone(Field):
             raise ValueError("Invalid, please enter a valid phone number")
 
         return phone
-
-#     def __repr__(self):
-#         return f"Phone(value={self.value})"
 
 
 class Record:
@@ -55,15 +50,10 @@ class Record:
                 self.update(new_phone)
                 return new_phone
 
-#     def __repr__(self):
-#         return "Record({})".format(', '.join([f"{k}={v!r}" for k, v in self.__dict__.items()]))
-
 
 class AddressBook(UserDict):
 
     def add_record(self, record):
-        if self.data.get(Name):
-            raise ValueError("The contact details have already been added\n")
 
         contact = Record(name=Name, phone=Phone)
         self.data[record.name.value] = contact
