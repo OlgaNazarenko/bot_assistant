@@ -7,8 +7,9 @@ class Field:
 
 
 class Name(Field):
-    def __repr__(self):
-        return f"Name(value={self.value})"
+    pass
+#     def __repr__(self):
+#         return f"Name(value={self.value})"
 
 
 class Phone(Field):
@@ -26,8 +27,8 @@ class Phone(Field):
 
         return phone
 
-    def __repr__(self):
-        return f"Phone(value={self.value})"
+#     def __repr__(self):
+#         return f"Phone(value={self.value})"
 
 
 class Record:
@@ -54,8 +55,8 @@ class Record:
                 self.update(new_phone)
                 return new_phone
 
-    def __repr__(self):
-        return "Record({})".format(', '.join([f"{k}={v!r}" for k, v in self.__dict__.items()]))
+#     def __repr__(self):
+#         return "Record({})".format(', '.join([f"{k}={v!r}" for k, v in self.__dict__.items()]))
 
 
 class AddressBook(UserDict):
