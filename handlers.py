@@ -56,12 +56,21 @@ def change_contact(name: str, old_phone: str, new_phone: str) -> str:
 
 @input_error
 def show_all() -> str:
-    return '\n'.join(constants.ADDRESS_BOOK.data)
+    # return f'All contacts can be seen in: \n{constants.ADDRESS_BOOK.data}'
+
+    book = []
+
+    for contact in book:
+        contact = f"{contact['name']}: {contact['phone']}"
+        print(constants.ADDRESS_BOOK.append(contact))
+
+    return constants.ADDRESS_BOOK
+    # return '\n'.join(constants.ADDRESS_BOOK)
 
 
 def create_data(name: str, phone: str):
     name = name[:]
-    phone = phone[1]
+    phone = phone[:]
     if name.isnumeric():
         raise ValueError('You entered a wrong name.')
     if not phone.isnumeric():
