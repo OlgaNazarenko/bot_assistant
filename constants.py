@@ -11,7 +11,7 @@ ADDRESS_BOOK = AddressBook()
 
 COMMANDS = {
     'hello': hello_func,
-    ('exit', 'good bye', 'close'): exit_func,
+    'good bye': exit_func,
     'add': add_contact,
     'phone': phone_сontact,
     'change': change_contact,
