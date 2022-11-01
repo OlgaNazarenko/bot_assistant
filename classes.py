@@ -16,7 +16,6 @@ class Phone(Field):
         super().__init__(value)
         self.value = value
 
-    #     check_phone(value)
 
     @staticmethod
     def check_phone(phone: str) -> str:
@@ -55,9 +54,8 @@ class Record:
                 self.update(new_phone)
                 return new_phone
 
-    # def __repr__(self):
-    #     return "Record({})".format(', '.join([f"{k}={v!r}" for k, v in self.__dict__.items()]))
-
+    def __repr__(self):
+        return f"Record('{self.value}','{self.phone})'"
 
 class AddressBook(UserDict):
 
