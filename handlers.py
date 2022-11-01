@@ -64,8 +64,8 @@ def show_all() -> str:
         contact = f"{contact['name']}: {contact['phone']}"
         print(constants.ADDRESS_BOOK.append(contact))
 
-    return constants.ADDRESS_BOOK
-    # return '\n'.join(constants.ADDRESS_BOOK)
+    #return constants.ADDRESS_BOOK
+    return '\n'.join(constants.ADDRESS_BOOK)
 
 
 def create_data(name: str, phone: str):
