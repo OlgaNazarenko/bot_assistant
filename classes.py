@@ -1,3 +1,4 @@
+import re
 from collections import UserDict
 
 
@@ -5,17 +6,20 @@ class Field:
     def __init__(self, value):
         self.value = value
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}(value={self.value})"
+
 
 class Name(Field):
-    def __repr__(self):
-       return f"Name: {self.value}"
+   pass
 
 
 class Phone(Field):
     def __init__(self, value):
+        value = self.check_phone(value)
+
         super().__init__(value)
         self.value = value
-
 
     @staticmethod
     def check_phone(phone: str) -> str:
@@ -26,39 +30,32 @@ class Phone(Field):
 
         return phone
 
-    def __repr__(self):
-        return f"Phone: {self.value}"
-
 
 class Record:
     def __init__(self, name, phone=None):
         self.name = Name(name)
         self.phones = [Phone(phone)] if phone else []
 
-     def add_phone(self, phone):
+    def add_phone(self, phone):
         self.phones.append(Phone(phone))
 
-        if any(x.value == phone.value for x in self.phones):
-            return self.phones.append(phone)
-        return phone
-
-    def delete_phone(self, phone_):
-        for phone in self.phones:
-            if phone.value == phone_:
+    def delete_phone(self, phone: str) -> str | None:
+        for phone_ in self.phones:
+            if phone_.value == phone:
                 self.phones.remove(phone_)
                 return phone
 
-    def update_phone(self, old_phone, new_phone):
-        for phone in self.phone:
+    def update_phone(self, old_phone: str, new_phone: str) -> str | None:
+        for phone in self.phones:
             if phone.value == old_phone:
-                self.update(new_phone)
+                phone.value = new_phone
                 return new_phone
 
     def __repr__(self):
-        return f"Record('{self.name}','{self.phones})'"
+        return "Record({})".format(', '.join([f"{k}={v!r}" for k, v in self.__dict__.items()]))
+
 
 class AddressBook(UserDict):
 
-    def add_record(self, record):
-        contact = Record(name=Name, phone=Phone)
-        self.data[record.name.value] = contact
+    def add_record(self, record: Record):
+        self.data[record.name.value] = record
