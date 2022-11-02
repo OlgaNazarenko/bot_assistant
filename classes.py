@@ -8,7 +8,7 @@ class Field:
 
 class Name(Field):
     def __repr__(self):
-        return f"Name{self.value}"
+       return f"Name: {self.value}"
 
 
 class Phone(Field):
@@ -27,7 +27,7 @@ class Phone(Field):
         return phone
 
     def __repr__(self):
-        return f"Phone{self.value}"
+        return f"Phone: {self.value}"
 
 
 class Record:
@@ -35,17 +35,17 @@ class Record:
         self.name = Name(name)
         self.phones = [Phone(phone)] if phone else []
 
-    def add_phone(self, phone):
-        phone = Phone(phone)
+     def add_phone(self, phone):
+        self.phones.append(Phone(phone))
 
         if any(x.value == phone.value for x in self.phones):
             return self.phones.append(phone)
         return phone
 
-    def delete_phone(self, phone):
-        for phone in self.phone:
-            if phone.value == phone:
-                self.phone.remove(phone)
+    def delete_phone(self, phone_):
+        for phone in self.phones:
+            if phone.value == phone_:
+                self.phones.remove(phone_)
                 return phone
 
     def update_phone(self, old_phone, new_phone):
@@ -55,13 +55,10 @@ class Record:
                 return new_phone
 
     def __repr__(self):
-        return f"Record('{self.value}','{self.phone})'"
+        return f"Record('{self.name}','{self.phones})'"
 
 class AddressBook(UserDict):
 
     def add_record(self, record):
-        # if self.data.get(Name):
-        #     raise ValueError("The contact details have already been added\n")
-
         contact = Record(name=Name, phone=Phone)
         self.data[record.name.value] = contact
