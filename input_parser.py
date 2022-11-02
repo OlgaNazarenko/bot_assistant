@@ -6,6 +6,7 @@ from constants import COMMANDS
 
 @input_error
 def search_args(data: str) -> tuple[FunctionType, list[str] | None]:
+
     for command, func in COMMANDS.items():
 
         if data.lower().startswith(command):
