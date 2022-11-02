@@ -4,16 +4,22 @@ from handlers import (
     exit_func,
     add_contact,
     phone_сontact,
-    change_contact,
-    show_all
+    show_all,
+    add_phone,
+    delete_phone,
+    update_phone
+
 )
+
 ADDRESS_BOOK = AddressBook()
 
 COMMANDS = {
     'hello': hello_func,
     'good bye': exit_func,
-    'add': add_contact,
     'phone': phone_сontact,
-    'change': change_contact,
-    'show all': show_all
+    'show all': show_all,
+    'add_phone': add_phone,
+    'add': add_contact,
+    'delete_phone': delete_phone,
+    'update_phone': update_phone
 }
