@@ -23,60 +23,63 @@ def add_contact(name: str, phone: str) -> str:
     if constants.ADDRESS_BOOK.get(name):
         raise ValueError("The contact details have already been added\n")
 
-    record = Record(name)
-    record.add_phone(phone)
+    record = Record(name, phone)
     constants.ADDRESS_BOOK.add_record(record)
 
     return 'The contact details have been added.'
 
 
 @input_error
-def phone_сontact(name: str, phone: str) -> str:
-    return f"'name:'{constants.ADDRESS_BOOK.data[name].name.value}, 'phone:'{list(map(lambda x: x.value, constants.ADDRESS_BOOK.data[name].phones))}"
+def add_phone(name: str, phone: str) -> str:
+    contact: Record | None = constants.ADDRESS_BOOK.get(name)
 
+    if not contact:
+        raise ValueError("We cannot add the phone number to the existed one")
 
-def validate_phone(phone: str):
-    result = re.search(r"(^380|0|80)\d{9}$", constants.ADDRESS_BOOK[phone])
-
-    if not result:
-        raise ValueError(f'The phone number is invalid, {phone}.')
-
-
-@input_error
-def change_contact(name: str, old_phone: str, new_phone: str) -> str:
-    name, phone = create_data(name, old_phone)
-
-    record = Record(name)
-    record.add_phone(new_phone)
-    constants.ADDRESS_BOOK.add_record(record)
-
-    return f'The phone number for {name} was changed from {old_phone} to {new_phone}. ' \
-           f'And it is updated in the main file.'
+    contact.add_phone(phone)
+    return f"The contact has been added to the list"
 
 
 @input_error
-def show_all():
-    # return f'All contacts can be seen in: \n{constants.ADDRESS_BOOK.data}'
-    print(constants.ADDRESS_BOOK.values())
-    return
+def phone_сontact(name: str) -> str:
+    contact = constants.ADDRESS_BOOK[name]
 
-
-def create_data(name: str, phone: str):
-    name = name[:]
-    phone = phone[:]
-    if name.isnumeric():
-        raise ValueError('You entered a wrong name.')
-    if not phone.isnumeric():
-        raise ValueError('You entered a wrong phone number.')
-    return name, phone
+    phones = [str(x.value) for x in contact.phones]
+    return f"{contact.name.value}: {', '.join(phones)}"
 
 
 @input_error
-def delete_func(name: str, phone: str):
-    name, phone = create_data(data)
-    record_delete = addressbook.data[name]
+def update_phone(name: str, old_phone: str, new_phone: str) -> str:
+    contact: Record | None = constants.ADDRESS_BOOK[name]
+    updated_phone = contact.update_phone(old_phone, new_phone)
 
-    if record_delete.delete_phone(phone) is True:
-        return f'Contact name: {name} phone: {phone}, has been deleted.'
-    else:
-        return 'The entered phone number does not exist'
+    if updated_phone:
+        return f"The old phone {old_phone} was updated to a new one {new_phone}."
+
+    return f"The number {old_phone} of this person was not located in the list."
+
+
+@input_error
+def show_all() -> str:
+
+    format_contacts = []
+
+    for contact in constants.ADDRESS_BOOK.values():
+        phones = [str(x.value) for x in contact.phones]
+        contact = f"{contact.name.value}: {', '.join(phones)}"
+
+        format_contacts.append(contact)
+
+    return '\n'.join(format_contacts)
+
+
+@input_error
+def delete_phone(name: str, phone: str):
+    contact: Record | None = constants.ADDRESS_BOOK[name]
+
+    deleted_phone = contact.delete_phone(phone)
+
+    if deleted_phone:
+        return f"The phone number {phone} for {name} was removed."
+
+    return f"The number {phone} of this person was not located in the list."
