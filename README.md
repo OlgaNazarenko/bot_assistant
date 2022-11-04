@@ -11,4 +11,3 @@ Integrated with classes:
 #bot_assistant3
 -  a built-in package, JSON, was used to store and exchange data in this bot
 -  additional search for contacts was added (find_contacts)
-
