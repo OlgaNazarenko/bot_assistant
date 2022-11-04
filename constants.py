@@ -9,7 +9,6 @@ from handlers import (
     delete_phone,
     update_phone,
     update_birthday,
-
 )
 
 ADDRESS_BOOK = AddressBook()
