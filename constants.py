@@ -7,7 +7,8 @@ from handlers import (
     show_all,
     add_phone,
     delete_phone,
-    update_phone
+    update_phone,
+    update_birthday,
 
 )
 
@@ -21,5 +22,6 @@ COMMANDS = {
     'add_phone': add_phone,
     'add': add_contact,
     'delete_phone': delete_phone,
-    'update_phone': update_phone
+    'update_phone': update_phone,
+    'update_birthday': update_birthday,
 }
