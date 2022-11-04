@@ -7,8 +7,8 @@ from handlers import (
     show_all,
     add_phone,
     delete_phone,
-    update_phone
-
+    update_phone,
+    update_birthday,
 )
 
 ADDRESS_BOOK = AddressBook()
@@ -21,5 +21,6 @@ COMMANDS = {
     'add_phone': add_phone,
     'add': add_contact,
     'delete_phone': delete_phone,
-    'update_phone': update_phone
+    'update_phone': update_phone,
+    'update_birthday': update_birthday,
 }
