@@ -165,7 +165,8 @@ class AddressBook:
             if name == contact.name.value:
                 return contact
 
-    # This additional and temporary command was created because all data here is saved in the file, and it is impossible to change object in this format.
+    # This additional and temporary command was created because all data here is saved in the file, and it is impossible 
+    # to change object in this format.
     def change_contact(self, contact: Record, remove: bool = False) -> None:
         temporary_filename = 'old_contacts.json'
 
