@@ -16,4 +16,3 @@ def input_error(handler):
             return result
 
     return wrapper
-
