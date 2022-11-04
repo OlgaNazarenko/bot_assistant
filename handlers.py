@@ -6,7 +6,6 @@ from utils import input_error
 from classes import Record
 import constants
 
-
 @input_error
 def hello_func():
     return 'How can I help you?'
@@ -20,7 +19,7 @@ def exit_func():
 @input_error
 def add_contact(name: str, phone: str = None, birthday: str = None) -> str:
 
-    if constants.ADDRESS_BOOK.get(name):
+    if constants.ADDRESS_BOOK.get_contact(name):
         raise ValueError("The contact details have already been added\n")
 
     record = Record(name, phone, birthday)
@@ -31,12 +30,13 @@ def add_contact(name: str, phone: str = None, birthday: str = None) -> str:
 
 @input_error
 def add_phone(name: str, phone: str) -> str:
-    contact: Record | None = constants.ADDRESS_BOOK.get(name)
+    contact: Record | None = constants.ADDRESS_BOOK.get_contact(name)
 
     if not contact:
-        raise ValueError("We cannot add the phone number to the existed one")
+        raise ValueError("We cannot add the phone number to un-existed contact")
 
     contact.add_phone(phone)
+    constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file.
     return f"The contact has been added to the list"
 
 
@@ -54,6 +54,8 @@ def update_phone(name: str, old_phone: str, new_phone: str) -> str:
     updated_phone = contact.update_phone(old_phone, new_phone)
 
     if updated_phone:
+        constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file.
+
         return f"The old phone {old_phone} was updated to a new one {new_phone}."
 
     return f"The number {old_phone} of this person was not located in the list."
@@ -66,6 +68,8 @@ def delete_phone(name: str, phone: str):
     deleted_phone = contact.delete_phone(phone)
 
     if deleted_phone:
+        constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file.
+
         return f"The phone number {phone} for {name} was removed."
 
     return f"The number {phone} of this person was not located in the list."
@@ -76,6 +80,7 @@ def update_birthday(name: str, birthday: str) -> str:
     contact: Record | None = constants.ADDRESS_BOOK[name]
 
     contact.change_birthday(birthday)
+    constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file.
     return f"The birthday of this person, {name}, was change to {contact.birthday.value}"
 
 
@@ -105,3 +110,20 @@ def show_all() -> str:
         format_contacts.append(contact)
 
     return '\n'.join(format_contacts)
+
+
+@input_error
+def find_contacts(value: str) -> str:
+    contacts = constants.ADDRESS_BOOK.search_contacts(value)
+
+    if contacts:
+        format_contacts = []
+
+        for contact in contacts:
+            phones = [str(x.value) for x in contact.phones]
+            birthday = contact.birthday.value if contact.birthday else ''
+            contact = f"{contact.name.value} : {birthday} : {', '.join(phones)}"
+
+            format_contacts.append(contact)
+
+        return '\n'.join(format_contacts)
