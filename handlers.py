@@ -18,12 +18,12 @@ def exit_func():
 
 
 @input_error
-def add_contact(name: str, phone: str) -> str:
+def add_contact(name: str, phone: str = None, birthday: str = None) -> str:
 
     if constants.ADDRESS_BOOK.get(name):
         raise ValueError("The contact details have already been added\n")
 
-    record = Record(name, phone)
+    record = Record(name, phone, birthday)
     constants.ADDRESS_BOOK.add_record(record)
 
     return 'The contact details have been added.'
@@ -60,20 +60,6 @@ def update_phone(name: str, old_phone: str, new_phone: str) -> str:
 
 
 @input_error
-def show_all() -> str:
-
-    format_contacts = []
-
-    for contact in constants.ADDRESS_BOOK.values():
-        phones = [str(x.value) for x in contact.phones]
-        contact = f"{contact.name.value}: {', '.join(phones)}"
-
-        format_contacts.append(contact)
-
-    return '\n'.join(format_contacts)
-
-
-@input_error
 def delete_phone(name: str, phone: str):
     contact: Record | None = constants.ADDRESS_BOOK[name]
 
@@ -83,3 +69,39 @@ def delete_phone(name: str, phone: str):
         return f"The phone number {phone} for {name} was removed."
 
     return f"The number {phone} of this person was not located in the list."
+
+
+@input_error
+def update_birthday(name: str, birthday: str) -> str:
+    contact: Record | None = constants.ADDRESS_BOOK[name]
+
+    contact.change_birthday(birthday)
+    return f"The birthday of this person, {name}, was change to {contact.birthday.value}"
+
+
+@input_error
+def days_to_birthday(name: str) -> str:
+    contact: Record | None = constants.ADDRESS_BOOK[name]
+
+    days = contact.days_to_birthday()
+
+    if not days:
+        return f"There is no data of the birthday"
+
+    return f"It is left {days} till the next birthday of {name}"
+
+
+@input_error
+def show_all() -> str:
+
+    format_contacts = []
+
+    for contact in constants.ADDRESS_BOOK.iterator(1):
+        contact = contact[0]
+        phones = [str(x.value) for x in contact.phones]
+        birthday = contact.birthday.value if contact.birthday else ''
+        contact = f"{contact.name.value} : {birthday} : {', '.join(phones)}"
+
+        format_contacts.append(contact)
+
+    return '\n'.join(format_contacts)
