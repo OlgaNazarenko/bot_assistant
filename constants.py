@@ -9,6 +9,7 @@ from handlers import (
     delete_phone,
     update_phone,
     update_birthday,
+    find_contacts,
 )
 
 ADDRESS_BOOK = AddressBook()
@@ -23,4 +24,5 @@ COMMANDS = {
     'delete_phone': delete_phone,
     'update_phone': update_phone,
     'update_birthday': update_birthday,
+    'find_contacts': find_contacts
 }
