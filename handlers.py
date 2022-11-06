@@ -36,7 +36,7 @@ def add_phone(name: str, phone: str) -> str:
         raise ValueError("We cannot add the phone number to un-existed contact")
 
     contact.add_phone(phone)
-    constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file format.
+    constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file.
     return f"The contact has been added to the list"
 
 
@@ -54,7 +54,7 @@ def update_phone(name: str, old_phone: str, new_phone: str) -> str:
     updated_phone = contact.update_phone(old_phone, new_phone)
 
     if updated_phone:
-        constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file format.
+        constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file.
 
         return f"The old phone {old_phone} was updated to a new one {new_phone}."
 
@@ -68,7 +68,7 @@ def delete_phone(name: str, phone: str):
     deleted_phone = contact.delete_phone(phone)
 
     if deleted_phone:
-        constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file format.
+        constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file.
 
         return f"The phone number {phone} for {name} was removed."
 
@@ -80,7 +80,7 @@ def update_birthday(name: str, birthday: str) -> str:
     contact: Record | None = constants.ADDRESS_BOOK[name]
 
     contact.change_birthday(birthday)
-    constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file format.
+    constants.ADDRESS_BOOK.change_contact(contact)  # have to add additional step because of data is saved in the file.
     return f"The birthday of this person, {name}, was change to {contact.birthday.value}"
 
 
