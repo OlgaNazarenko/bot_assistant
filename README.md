@@ -6,3 +6,4 @@ Integrated with classes:
  - added setter for value in the class Birthday, check the accuracy of added birthday date.
  - several commands were added, like delete_phone, update_phone, and update_birthday.
  - additional find_contacts command was added. 
+ - extanded AddressBook with the birthday's methods
