@@ -23,7 +23,6 @@ def search_args(data: str) -> tuple[FunctionType, list[str] | None]:
 def check_args(func, args: list) -> bool:
     func_params = inspect.getfullargspec(func.__dict__['__wrapped__'])
 
-#     
     if not func_params.args:
         return False
 
