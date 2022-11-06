@@ -1,6 +1,5 @@
 import json
 from json import JSONEncoder
-from json import JSONDecoder
 import re
 from collections import UserDict
 import constants
