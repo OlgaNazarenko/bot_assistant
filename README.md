@@ -1,4 +1,4 @@
-# bot_assistant3 is based on the bot_assistant2
+# bot_assistant2
 Integrated with classes:
  - Additional class Birthday was added, which includes the method days_to_birthday. 
  - iterator is added into the AddressBook
